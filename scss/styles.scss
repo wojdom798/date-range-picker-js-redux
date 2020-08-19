@@ -3,14 +3,14 @@
 @import './variables';
 
 .date-picker-container {
+  position: relative;
   max-width: 50%;
   width: 400px;
   // height: 500px;
   background-color: #fafafa;
-  box-shadow: 0 0 10px 1px rgb(200, 200, 200);
+  box-shadow: 0 0 10px 1px $box-shadow-color;
 
-  .year,
-  .month {
+  .year-and-month {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -18,7 +18,7 @@
     @include disable-text-selection;
   }
 
-  .year {
+  .year-and-month {
     background-color: $accent-color;
     color: $accent-txt-color;
     font-size: 1.3rem;
@@ -37,8 +37,8 @@
 
   .h {
     display: inline-block;
-    min-width: 50%;
-    max-width: 70%;
+    // min-width: 50%;
+    // max-width: 70%;
     text-align: center;
     margin: 5px;
     padding: 10px;
@@ -132,6 +132,33 @@
         padding: 7px;
         border-radius: 7px;
       }
+    }
+  }
+}
+
+#month-picker-container {
+  // display: none;
+  position: absolute;
+  top: 0px;
+  left: -125px;
+  box-shadow: -5px 0px 10px $box-shadow-color;
+
+  ul {
+    list-style: none;
+    @include disable-text-selection;
+  }
+
+  li {
+    padding: 10px 15px;
+    font-size: 1.3rem;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+
+    &.active,
+    &:hover {
+      background-color: $accent-color;
+      color: #fefefe;
     }
   }
 }

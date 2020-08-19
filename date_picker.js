@@ -2,10 +2,42 @@ const daysContainer = document.getElementById('days');
 let days = daysContainer.children;
 let activeDay;
 
+let isMonthPickerActive = false;
+
+const monthSelector = document.getElementById('month-selector');
+monthSelector.onclick = function(ev) {
+  if (!isMonthPickerActive) {
+    selectMonth('month-picker-container', store);
+    isMonthPickerActive = true;
+  } else {
+    const tmpContainer = document.getElementById('month-picker-container');
+    tmpContainer.innerHTML = '';
+    isMonthPickerActive = false;
+  }
+}
+
+// selecting months
+function selectMonth(containerId, store) {
+  const monthChoices = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  console.log(monthChoices);
+  const monthPickerContainer = document.getElementById(containerId);
+  const tmpListContainer = document.createElement('ul');
+  for (let month of monthChoices) {
+    let tmpListElement = document.createElement('li');
+    tmpListElement.textContent = month;
+    tmpListElement.addEventListener('click', function(ev) {
+      // console.log(ev.target.textContent)
+      store.dispatch({ type: 'SELECT_CURRENT_MONTH', currentMonth: monthChoices.indexOf(ev.target.textContent) + 1 });
+    });
+    tmpListContainer.appendChild(tmpListElement);
+  }
+  monthPickerContainer.appendChild(tmpListContainer);
+}
+
 /*
 Generating days
 */
-function generateDays() {
+function generateDays(store) {
   const containerFragment = document.createDocumentFragment();
   const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
   let i;
@@ -28,18 +60,34 @@ function generateDays() {
     let tmpDiv = document.createElement('div');
     tmpDiv.classList.add('number');
     tmpDiv.textContent = i;
+    if (i === store.getState().currentDay) {
+      activeDay = tmpDiv;
+      activeDay.classList.toggle('active');
+    }
+    tmpDiv.addEventListener('click', function(ev) {
+      activeDay.classList.toggle('active');
+      activeDay = ev.target;
+      activeDay.classList.toggle('active');
+      store.dispatch({ type: 'SELECT_CURRENT_DAY', currentDay: Number(ev.target.textContent) });
+      let tmpActiveDate = store.getState().activeDate;
+      if (tmpActiveDate === 1) {
+        updateSelectedDate(dateFromSpan);
+      } else if (tmpActiveDate === 2) {
+        updateSelectedDate(dateToSpan);
+      }
+    });
     containerFragment.appendChild(tmpDiv);
   }
 
   return containerFragment;
 }
 
-// daysContainer.appendChild(generateDays());
+
 
 /*
 Add click handlers to numbers in the days container
 */
-for (let day of days) {
+/*for (let day of days) {
   if (day.classList.contains('number')) {
     if (Number(day.textContent) === 17) {
       activeDay = day;
@@ -59,7 +107,7 @@ for (let day of days) {
       }
     });
   }
-}
+}*/
 
 const dateFromSpan = document.getElementById('date-from');
 const dateToSpan = document.getElementById('date-to');
@@ -187,4 +235,6 @@ store.subscribe(listener1);
 
 
 
+// Need store reference
 
+daysContainer.appendChild(generateDays(store));

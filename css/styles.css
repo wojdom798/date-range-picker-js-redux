@@ -1,11 +1,11 @@
 .date-picker-container {
+  position: relative;
   max-width: 50%;
   width: 400px;
   background-color: #fafafa;
   box-shadow: 0 0 10px 1px #c8c8c8;
 }
-.date-picker-container .year,
-.date-picker-container .month {
+.date-picker-container .year-and-month {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,7 +17,7 @@
   -ms-user-select: none;
   user-select: none;
 }
-.date-picker-container .year {
+.date-picker-container .year-and-month {
   background-color: #00A5CF;
   color: #F7F0F5;
   font-size: 1.3rem;
@@ -27,8 +27,6 @@
 }
 .date-picker-container .h {
   display: inline-block;
-  min-width: 50%;
-  max-width: 70%;
   text-align: center;
   margin: 5px;
   padding: 10px;
@@ -117,6 +115,33 @@
   color: #0091b6;
   padding: 7px;
   border-radius: 7px;
+}
+
+#month-picker-container {
+  position: absolute;
+  top: 0px;
+  left: -125px;
+  box-shadow: -5px 0px 10px #c8c8c8;
+}
+#month-picker-container ul {
+  list-style: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+#month-picker-container li {
+  padding: 10px 15px;
+  font-size: 1.3rem;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+#month-picker-container li.active, #month-picker-container li:hover {
+  background-color: #00A5CF;
+  color: #fefefe;
 }
 
 /*# sourceMappingURL=styles.css.map */
