@@ -27,7 +27,11 @@ function selectMonth(containerId, store) {
     tmpListElement.textContent = month;
     tmpListElement.addEventListener('click', function(ev) {
       // console.log(ev.target.textContent)
+      monthSelector.textContent = ev.target.textContent;
       store.dispatch({ type: 'SELECT_CURRENT_MONTH', currentMonth: monthChoices.indexOf(ev.target.textContent) + 1 });
+      const tmpContainer = document.getElementById('month-picker-container');
+      tmpContainer.innerHTML = '';
+      isMonthPickerActive = false;
     });
     tmpListContainer.appendChild(tmpListElement);
   }
@@ -40,6 +44,13 @@ Generating days
 function generateDays(store) {
   const containerFragment = document.createDocumentFragment();
   const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  const daysInNonLeapYear = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const baseDayOfTheWeek = {
+    day: 1,
+    month: 1,
+    year: 2000,
+    dayOfTheWeek: 5 // 0-6, 0 = monday, 6 = sunday
+  }
   let i;
   // 1. generate divs containing day names
   for (i = 0; i < dayNames.length; i++) {
@@ -69,6 +80,18 @@ function generateDays(store) {
       activeDay = ev.target;
       activeDay.classList.toggle('active');
       store.dispatch({ type: 'SELECT_CURRENT_DAY', currentDay: Number(ev.target.textContent) });
+      let tmpDate = {
+        day: Number(ev.target.textContent),
+        month: store.getState().currentMonth,
+        year: store.getState().currentYear,
+      }
+      if (store.getState().activeDate === 1) {
+        store.dispatch({ type: 'SET_START_DATE', startDate: tmpDate });
+      } else {
+        store.dispatch({ type: 'SET_END_DATE', endDate: tmpDate });
+      }
+      
+      
       let tmpActiveDate = store.getState().activeDate;
       if (tmpActiveDate === 1) {
         updateSelectedDate(dateFromSpan);
@@ -82,7 +105,9 @@ function generateDays(store) {
   return containerFragment;
 }
 
-
+function isLeapYear(year) {
+  return ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0);
+}
 
 /*
 Add click handlers to numbers in the days container
@@ -171,7 +196,13 @@ function reducer(state, action) {
   } 
   else if (action.type === 'SELECT_ACTIVE_DATE') {
     return {...state, activeDate: action.activeDate }
-  } 
+  }
+  else if (action.type === 'SET_START_DATE') {
+    return {...state, startDate: action.startDate }
+  }
+  else if (action.type === 'SET_END_DATE') {
+    return {...state, endDate: action.endDate }
+  }
   else {
     return state;
   }
@@ -209,7 +240,19 @@ const initialState = {
   currentDay: 18,
   currentMonth: 8,
   currentYear: 2020,
-  activeDate: 1
+  activeDate: 1,
+
+  startDate: {
+    day: 1,
+    month: 1,
+    year: 2019
+  },
+
+  endDate: {
+    day: 1,
+    month: 1,
+    year: 2020
+  }
 }
 
 // Set up the redux store
