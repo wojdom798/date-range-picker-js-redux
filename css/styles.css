@@ -9,7 +9,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -20,7 +19,7 @@
 .date-picker-container .year-and-month {
   background-color: #00A5CF;
   color: #F7F0F5;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 .date-picker-container .headers {
   display: flex;
@@ -36,6 +35,10 @@
 }
 .date-picker-container .h:hover {
   background-color: #0091b6;
+}
+.date-picker-container .h input {
+  display: inline-block;
+  max-width: 45%;
 }
 .date-picker-container button {
   align-self: stretch;
@@ -95,7 +98,10 @@
   cursor: pointer;
 }
 .date-picker-container #footer {
-  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
   font-size: 1.2rem;
 }
 .date-picker-container #footer span {
@@ -115,6 +121,16 @@
   color: #0091b6;
   padding: 7px;
   border-radius: 7px;
+}
+.date-picker-container #footer button {
+  background-color: #00A5CF;
+  border-radius: 2px;
+  padding: 7px;
+  font-size: 1.1rem;
+  transition: background-color 200ms ease;
+}
+.date-picker-container #footer button:hover {
+  background-color: #0091b6;
 }
 
 #month-picker-container {

@@ -14,14 +14,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    // width: 100%;
     @include disable-text-selection;
   }
 
   .year-and-month {
     background-color: $accent-color;
     color: $accent-txt-color;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     // margin-bottom: 10px;
   }
 
@@ -48,6 +48,11 @@
 
     &:hover {
       background-color: $header-hover-bg-color;
+    }
+
+    input {
+      display: inline-block;
+      max-width: 45%;
     }
   }
 
@@ -116,7 +121,10 @@
   }
 
   #footer {
-    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
     font-size: 1.2rem;
 
     span {
@@ -131,6 +139,18 @@
         color: darken($accent-color, 5%);
         padding: 7px;
         border-radius: 7px;
+      }
+    }
+
+    button {
+      background-color: $accent-color;
+      border-radius: 2px;
+      padding: 7px;
+      font-size: 1.1rem;
+      transition: background-color $main-delay ease;
+
+      &:hover {
+        background-color: darken($accent-color, 5%);
       }
     }
   }

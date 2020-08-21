@@ -1,3 +1,4 @@
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const daysContainer = document.getElementById('days');
 let days = daysContainer.children;
 let activeDay;
@@ -16,10 +17,58 @@ monthSelector.onclick = function(ev) {
   }
 }
 
+
+
+const yearSelector = document.getElementById('year-selector');
+yearSelector.onchange = function(ev) {
+  store.dispatch({ type: 'SELECT_CURRENT_YEAR', currentYear: ev.target.value });
+  daysContainer.innerHTML = '';
+  daysContainer.appendChild(generateDays(store));
+}
+
+
+
+const nextMonthBtn = document.getElementById('next-month-btn');
+const prevMonthBtn = document.getElementById('prev-month-btn');
+
+nextMonthBtn.onclick = function(ev) {
+  const currentMonth = store.getState().currentMonth;
+  const currentYear = store.getState().currentYear;
+  if (currentMonth + 1 > 12) {
+    store.dispatch({ type: 'SELECT_CURRENT_MONTH', currentMonth: 1 });
+    store.dispatch({ type: 'SELECT_CURRENT_YEAR', currentYear: currentYear + 1 });
+    monthSelector.textContent = monthNames[0];
+    yearSelector.value = currentYear + 1;
+  } else {
+    store.dispatch({ type: 'SELECT_CURRENT_MONTH', currentMonth: currentMonth + 1 });
+    monthSelector.textContent = monthNames[currentMonth];
+  }
+  daysContainer.innerHTML = '';
+  daysContainer.appendChild(generateDays(store));
+}
+
+prevMonthBtn.onclick = function(ev) {
+  const currentMonth = store.getState().currentMonth;
+  const currentYear = store.getState().currentYear;
+  if (currentMonth - 1 < 1) {
+    store.dispatch({ type: 'SELECT_CURRENT_MONTH', currentMonth: 12 });
+    store.dispatch({ type: 'SELECT_CURRENT_YEAR', currentYear: currentYear - 1 });
+    monthSelector.textContent = monthNames[11];
+    yearSelector.value = currentYear - 1;
+  } else {
+    store.dispatch({ type: 'SELECT_CURRENT_MONTH', currentMonth: currentMonth - 1 });
+    monthSelector.textContent = monthNames[store.getState().currentMonth - 1];
+  }
+  daysContainer.innerHTML = '';
+  daysContainer.appendChild(generateDays(store));
+}
+
+
+
 // selecting months
 function selectMonth(containerId, store) {
   const monthChoices = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  console.log(monthChoices);
+  // console.log(monthChoices);
   const monthPickerContainer = document.getElementById(containerId);
   const tmpListContainer = document.createElement('ul');
   for (let month of monthChoices) {
@@ -32,10 +81,29 @@ function selectMonth(containerId, store) {
       const tmpContainer = document.getElementById('month-picker-container');
       tmpContainer.innerHTML = '';
       isMonthPickerActive = false;
+      // console.log('genearting days');
+      daysContainer.innerHTML = '';
+      daysContainer.appendChild(generateDays(store));
     });
     tmpListContainer.appendChild(tmpListElement);
   }
   monthPickerContainer.appendChild(tmpListContainer);
+}
+
+function selectYear(store) {
+
+}
+
+// Init the calendar
+function calendarInit() {
+  const todaysDate = new Date();
+  store.dispatch({ type: 'SELECT_CURRENT_DAY', currentDay: todaysDate.getDate()});
+  store.dispatch({ type: 'SELECT_CURRENT_MONTH', currentMonth: todaysDate.getMonth()+1});
+  store.dispatch({ type: 'SELECT_CURRENT_YEAR', currentYear: todaysDate.getFullYear()});
+
+  monthSelector.textContent = monthNames[store.getState().currentMonth-1];
+  yearSelector.value = store.getState().currentYear;
+  daysContainer.appendChild(generateDays(store));
 }
 
 /*
@@ -61,13 +129,19 @@ function generateDays(store) {
   }
 
   // 2. generate empty divs
-  for (i = 0; i < 5; i++) {
+  for (i = 0; i < calculateFirstDayOfTheWeek(store.getState().currentYear, store.getState().currentMonth); i++) {
     let tmpDiv = document.createElement('div');
     containerFragment.appendChild(tmpDiv);
   }
 
   // 3. genearte numbered divs
-  for (i = 1; i <= 29; i++) {
+  let numOfDays;
+  if (isLeapYear(store.getState().currentYear) && store.getState().currentMonth == 2) {
+    numOfDays = 29;
+  } else {
+    numOfDays = daysInNonLeapYear[store.getState().currentMonth - 1];
+  }
+  for (i = 1; i <= numOfDays; i++) {
     let tmpDiv = document.createElement('div');
     tmpDiv.classList.add('number');
     tmpDiv.textContent = i;
@@ -107,6 +181,29 @@ function generateDays(store) {
 
 function isLeapYear(year) {
   return ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0);
+}
+
+function calculateFirstDayOfTheWeek(year, month) {
+  const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const daysInNonLeapYear = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const baseDayOfTheWeek = {
+    day: 1,
+    month: 1,
+    year: 2000,
+    dayOfTheWeek: 5 // 0-6, 0 = monday, 6 = sunday
+  }
+  let yearDiff = year - baseDayOfTheWeek.year;
+  let dayDifference = Math.ceil(yearDiff / 4) * 366 + (yearDiff - Math.ceil(yearDiff / 4)) * 365;
+  for (let i = 0; i < month - 1; i++) {
+    if (i == 1 && isLeapYear(year)) {
+      dayDifference += 29;
+    } else {
+      dayDifference += daysInNonLeapYear[i];
+    }
+  }
+  // console.log(dayDifference);
+  // return dayNames[((dayDifference % 7) + baseDayOfTheWeek.dayOfTheWeek) % 7];
+  return ((dayDifference % 7) + baseDayOfTheWeek.dayOfTheWeek) % 7
 }
 
 /*
@@ -265,7 +362,7 @@ function listener1() {
   let year = tmpState.currentYear;
   // console.log(`${day}-${month}-${year}`);
   // console.log(formatDate(day, month, year));
-  console.log(tmpState);
+  // console.log(tmpState);
 }
 
 store.subscribe(listener1);
@@ -279,5 +376,5 @@ store.subscribe(listener1);
 
 
 // Need store reference
-
-daysContainer.appendChild(generateDays(store));
+calendarInit();
+// daysContainer.appendChild(generateDays(store));

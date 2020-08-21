@@ -34,20 +34,23 @@
     <div class="date-picker-container">
       <div id="month-picker-container"></div>
       <div class="year-and-month">
-        <button id="prev-btn-year" type="button">
+        <button id="prev-month-btn" type="button">
           <i class="fa fa-angle-left" aria-hidden="true"></i>
         </button>
         <div class="headers">
-          <h2 id="month-selector" class="h">February</h2>
-          <h2 class="h">2020</h2>
+          <h2 id="month-selector" class="h"></h2>
+          <h2 class="h"><input id="year-selector" type="number" value="2020" /></h2>
         </div>
-        <button id="next-btn-year" type="button">
+        <button id="next-month-btn" type="button">
           <i class="fa fa-angle-right" aria-hidden="true"></i>
         </button>
       </div>
       <div id="days" class="days"></div>
       <div id="footer">
-        from <span id='date-from' class="active">date-from</span> to <span id='date-to'>date-to</span>
+        <div>
+          from <span id='date-from' class="active">date-from</span> to <span id='date-to'>date-to</span>
+        </div>
+        <button type="button">save</button>
       </div>
     </div>
 
