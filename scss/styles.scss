@@ -33,6 +33,7 @@
 
   .headers {
     display: flex;
+    max-width: 50%;
   }
 
   .h {
@@ -49,11 +50,14 @@
     &:hover {
       background-color: $header-hover-bg-color;
     }
+  }
 
-    input {
-      display: inline-block;
-      max-width: 45%;
-    }
+  input {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 3px;
+    display: inline-block;
+    max-width: 45%;
   }
 
   button {
@@ -84,14 +88,14 @@
     // height: 400px;
     padding: 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
-    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+    grid-gap: 5px;
 
     div {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 40px;
+      height: 45px;
       color: #ddd;
       @include disable-text-selection;
     }
@@ -179,6 +183,38 @@
     &:hover {
       background-color: $accent-color;
       color: #fefefe;
+    }
+  }
+}
+
+.input-group {
+  display: inline-block;
+  display: flex;
+  align-items: center;
+  max-width: 90%;
+
+
+  input {
+    display: inline-block;
+    margin: 0;
+    outline: none;
+    border: none;
+    border-radius: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1.1rem;
+    text-align: center;
+    color: #333;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    
+    button {
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 0;
+      margin: 0;
     }
   }
 }

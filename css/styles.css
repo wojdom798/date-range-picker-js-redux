@@ -23,6 +23,7 @@
 }
 .date-picker-container .headers {
   display: flex;
+  max-width: 50%;
 }
 .date-picker-container .h {
   display: inline-block;
@@ -36,7 +37,10 @@
 .date-picker-container .h:hover {
   background-color: #0091b6;
 }
-.date-picker-container .h input {
+.date-picker-container input {
+  margin: 5px;
+  padding: 10px;
+  border-radius: 3px;
   display: inline-block;
   max-width: 45%;
 }
@@ -62,14 +66,14 @@
   background-color: #333;
   padding: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
-  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+  grid-gap: 5px;
 }
 .date-picker-container .days div {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
+  height: 45px;
   color: #ddd;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -158,6 +162,34 @@
 #month-picker-container li.active, #month-picker-container li:hover {
   background-color: #00A5CF;
   color: #fefefe;
+}
+
+.input-group {
+  display: inline-block;
+  display: flex;
+  align-items: center;
+  max-width: 90%;
+}
+.input-group input {
+  display: inline-block;
+  margin: 0;
+  outline: none;
+  border: none;
+  border-radius: 0;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.1rem;
+  text-align: center;
+  color: #333;
+}
+.input-group .buttons {
+  display: flex;
+  flex-direction: column;
+}
+.input-group .buttons button {
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 0;
+  margin: 0;
 }
 
 /*# sourceMappingURL=styles.css.map */

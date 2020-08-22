@@ -21,7 +21,7 @@ monthSelector.onclick = function(ev) {
 
 const yearSelector = document.getElementById('year-selector');
 yearSelector.onchange = function(ev) {
-  store.dispatch({ type: 'SELECT_CURRENT_YEAR', currentYear: ev.target.value });
+  store.dispatch({ type: 'SELECT_CURRENT_YEAR', currentYear: Number(ev.target.value) });
   daysContainer.innerHTML = '';
   daysContainer.appendChild(generateDays(store));
 }
@@ -59,6 +59,29 @@ prevMonthBtn.onclick = function(ev) {
     store.dispatch({ type: 'SELECT_CURRENT_MONTH', currentMonth: currentMonth - 1 });
     monthSelector.textContent = monthNames[store.getState().currentMonth - 1];
   }
+  daysContainer.innerHTML = '';
+  daysContainer.appendChild(generateDays(store));
+}
+
+
+// Increment  / decrement year buttons
+const incYearBtn = document.getElementById('inc-year-btn');
+const decYearBtn = document.getElementById('dec-year-btn');
+
+incYearBtn.onclick = function(ev) {
+  const currentYear = store.getState().currentYear;
+  store.dispatch({ type: 'SELECT_CURRENT_YEAR', currentYear: currentYear + 1 });
+  console.log(store.getState());
+  yearSelector.value = currentYear + 1;
+  daysContainer.innerHTML = '';
+  daysContainer.appendChild(generateDays(store));
+}
+
+decYearBtn.onclick = function(ev) {
+  const currentYear = store.getState().currentYear;
+  store.dispatch({ type: 'SELECT_CURRENT_YEAR', currentYear: currentYear - 1 });
+  console.log(store.getState());
+  yearSelector.value = currentYear - 1;
   daysContainer.innerHTML = '';
   daysContainer.appendChild(generateDays(store));
 }
@@ -129,7 +152,8 @@ function generateDays(store) {
   }
 
   // 2. generate empty divs
-  for (i = 0; i < calculateFirstDayOfTheWeek(store.getState().currentYear, store.getState().currentMonth); i++) {
+  let countEmpty = calculateFirstDayOfTheWeek(store.getState().currentYear, store.getState().currentMonth);
+  for (i = 0; i < countEmpty; i++) {
     let tmpDiv = document.createElement('div');
     containerFragment.appendChild(tmpDiv);
   }
@@ -174,6 +198,16 @@ function generateDays(store) {
       }
     });
     containerFragment.appendChild(tmpDiv);
+  }
+
+  // 5. generate empty divs to make the calendar always uniform size
+  let paddingCount;
+  if (countEmpty + numOfDays < 36) {
+    paddingCount = 36 - (countEmpty + numOfDays);
+    for (i = 0; i < paddingCount; i++) {
+      let tmpDiv = document.createElement('div');
+      containerFragment.appendChild(tmpDiv);
+    }
   }
 
   return containerFragment;
