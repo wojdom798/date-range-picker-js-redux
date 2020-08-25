@@ -1,9 +1,44 @@
 $accent-color: #34F;
 $accent-color: #192BC2;
 $accent-color: #00A5CF;
+$accent-color2: #ff685d;
 $accent-txt-color: #F7F0F5;
+$accent-txt-color: #fcfcfc;
 
+// delete
 $box-shadow-color: rgb(200, 200, 200);
+// /delete
+
+// Date Picker Container
+$date-picker-container-bg-color: #fafafa;
+$date-picker-container-box-shadow-color: rgb(200, 200, 200);
+
+// Header
+$date-picker-header-bg-color: $accent-color;
+$date-picker-month-name-color: $accent-txt-color;
+$date-picker-year-input-bg-color: $accent-color;
+$date-picker-year-input-txt-color: $accent-txt-color;
+
+// Content
+$date-picker-content-bg-color: #2d2d2d;
+$date-picker-day-name-color: #888;
+$date-picker-sunday-color: #ff685d;
+
+$date-picker-day-number-color: #fafafa;
+$date-picker-day-number-hover-bg-color: #009688;
+$date-picker-day-number-hover-bg-color: darken($accent-color, 10%);
+$date-picker-day-number-hover-txt-color: #fff;
+
+
+$date-picker-month-picker-txt-color: #fafafa;
+$date-picker-month-picker-hover-txt-color: #2d2d2d;
+$date-picker-month-picker-hover-bg-color: #fafafa;
+
+// Footer
+$date-span-color: $accent-color2;
+$date-picker-footer-button-bg-color: $accent-color;
+$date-picker-footer-button-txt-color: #fff;
+
 
 $header-hover-bg-color: darken($accent-color, 5%);
 

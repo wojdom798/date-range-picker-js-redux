@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 
       * {
         margin: 0;
@@ -26,37 +25,68 @@
         font-family: 'Source Sans Pro', sans-serif;
       }
 
+      body > * {
+        margin: 30px;
+      }
+
+      #trigger {
+        height: 100%;
+        font-size: 2rem;
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        color: #555;
+        /* transition: transform 300ms ease; */
+        transition: color 300ms ease;
+      }
+
+      #trigger:hover {
+        /* transform: scale(1.05); */
+        color: #333;
+      }
+
+      .form-group {
+        /* padding: 5px; */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        min-width: 250px;
+        border: 1px solid #aaa;
+        border-radius: 3px;
+      }
+
+      .form-group span {
+        padding: 10px;
+        display: inline-block;
+        font-size: 1.4rem;
+        border-right: 1px solid #aaa;
+        flex-grow: 5;
+        color: #555;
+      }
+
+      .form-group button {
+        flex-grow: 1;
+        padding: 0 10px;
+      }
+
     </style>
   </head>
 
   <body>
-    
-    <div class="date-picker-container">
-      <div id="month-picker-container"></div>
-      <div class="year-and-month">
-        <button id="prev-month-btn" type="button">
-          <i class="fa fa-angle-left" aria-hidden="true"></i>
-        </button>
-        <div class="headers">
-          <h2 id="month-selector" class="h"></h2>
-          <div class="input-group">
-            <input class="" id="year-selector" type="text" value="2020" />
-            <div class="buttons">
-              <button id="inc-year-btn" type="button"><i class="fas fa-chevron-up"></i></button>
-              <button id="dec-year-btn" type="button"><i class="fas fa-chevron-down"></i></button>
-            </div>
-          </div>
-        </div>
-        <button id="next-month-btn" type="button">
-          <i class="fa fa-angle-right" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div id="days" class="days"></div>
-      <div id="footer">
-        <div>
-          from <span id='date-from' class="active">date-from</span> to <span id='date-to'>date-to</span>
-        </div>
-        <button type="button">save</button>
+
+    <div class="form-group">
+      <span id="date-picker-label"></span>
+      <button id="trigger">
+        <i class="far fa-calendar-alt"></i>
+      </button>
+      <input type="hidden" name="date-range" value="18-05-2019;12-03-2020" id="outputField" />
+    </div>
+
+    <div id="date-picker-modal" class="modal">
+      <div class="modal-content">
+        <div id="date-picker-container" class="date-picker-container"></div>
       </div>
     </div>
 

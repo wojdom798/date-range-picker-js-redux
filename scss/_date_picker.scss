@@ -1,0 +1,212 @@
+.date-picker-container {
+  position: relative;
+  max-width: 50%;
+  min-width: 410px;
+  // width: 400px;
+  background-color: $date-picker-container-bg-color;
+  // box-shadow: 0 0 10px 1px $date-picker-container-box-shadow-color;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $date-picker-header-bg-color;
+
+    button { // targets previous month and next month buttons
+      // height: 100%;
+      align-self: stretch;
+      // align-self: center;
+      margin: 5px;
+      // padding: 10px;
+      border-radius: 3px;
+      min-width: 35px;
+      -webkit-appearacnce: none;
+      outline: none;
+      background-color: $button-bg-color;
+      color: $button-txt-color;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      transition: background-color $main-delay ease;
+
+      &:hover {
+        background-color: $button-hover-bg-color;
+      }
+    }
+
+    & > div { // container between the two buttons
+      display: flex;
+      align-items: center;
+    }
+
+    .h { // header containing the month name
+      color: $date-picker-month-name-color;
+      font-family: $header-font;
+      margin-right: 10px;
+      font-size: $header-font-size;
+      display: inline-block;
+      // min-width: 50%;
+      // max-width: 70%;
+      text-align: center;
+      margin: 5px;
+      padding: 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color $main-delay ease;
+
+      &:hover {
+        background-color: $header-hover-bg-color;
+      }
+    }
+
+    .input-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      input {
+        display: inline-block;
+        max-width: 100px;
+        padding: 10px;
+        border-radius: 3px;
+        border: none;
+        background-color: $date-picker-year-input-bg-color;
+        color: $date-picker-year-input-txt-color;
+        font-family: $main-font;
+        font-size: $header-font-size;
+        font-weight: 700;
+        transition: background-color $main-delay ease;
+
+        &:focus,
+        &:hover {
+          background-color: $header-hover-bg-color;
+        }
+      }
+
+      .buttons { // next/previous year buttons
+        margin: 3px 0;
+        display: flex;
+        flex-direction: column;
+
+        button {
+          font-size: 1.1rem;
+          margin: 0;
+          border-radius: 0;
+        }
+      }
+    }
+  } // /header
+
+  .content {
+    width: 100%;
+
+    .day-container {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-gap: 5px;
+      background-color: $date-picker-content-bg-color;
+
+      .day {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 45px;
+        color: $date-picker-day-number-color;
+        @include disable-text-selection;
+      }
+  
+      .day-name {
+        font-weight: 700;
+        color: $date-picker-day-name-color;
+        font-size: 1.2rem;
+      }
+  
+      .day-number {
+        border-radius: 2px;
+        transition: background-color $main-delay ease;
+      }
+  
+      .day-name:nth-child(7),
+      .day-number:nth-child(7n) {
+        color: $date-picker-sunday-color;
+      }
+  
+      .day-number.active,
+      .day-number:hover {
+        background: $date-picker-day-number-hover-bg-color;
+        color: $date-picker-day-number-hover-txt-color;
+        font-weight: 700;
+        cursor: pointer;
+      }
+    } // /day-container
+
+    .month-picker {
+      padding: 20px;
+      max-width: 410px;
+      // height: 425px;
+      display: flex;
+      flex-wrap: wrap;
+      background-color: $date-picker-content-bg-color;
+
+      .month {
+        margin: 5px;
+        display: inline-block;
+        padding: 10px;
+        // border: 1px solid #f00;
+        border-radius: 2px;
+        font-size: 1.2rem;
+        color: $date-picker-month-picker-txt-color;
+        cursor: pointer;
+        transition: background-color $main-delay ease, color $main-delay ease;
+
+        &:hover {
+          background-color: $date-picker-month-picker-hover-bg-color;
+          color: $date-picker-month-picker-hover-txt-color;
+        }
+      }
+    }
+  } // /content
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 1.2rem;
+
+    span {
+      color: $date-span-color;
+      cursor: pointer;
+      @include disable-text-selection;
+      transition: background-color 200ms ease, color 200ms ease, border 100ms ease, padding 200ms ease;
+
+      &.active {
+        border: 2px solid $accent-color;
+        background-color: rgba($accent-color, 0.2);
+        color: darken($accent-color, 5%);
+        padding: 7px;
+        border-radius: 7px;
+      }
+    }
+
+    button {
+      padding: 7px;
+      border-radius: 2px;
+      border: none;
+      font-size: 1.1rem;
+      background-color: $date-picker-footer-button-bg-color;
+      transition: background-color $main-delay ease;
+      color: $date-picker-footer-button-txt-color;
+      cursor: pointer;
+
+      &:first-child {
+        margin-right: 4px;
+      }
+
+      &:hover {
+        background-color: darken($accent-color, 5%);
+      }
+    }
+  } // /footer
+}
